@@ -1,0 +1,66 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+<Layout
+  title="The Island — Tidal Coding Camp"
+  description="How the causeway, crossing windows, lodging, meals, supervision, and safety work on a Brittany tidal island that floods twice a day."
+  path="/island"
+>
+  <section class="surface">
+    <div class="wrap">
+      <p class="kicker">The Island</p>
+      <h1 style="font-size:clamp(2.2rem,6vw,4.2rem)" class="wl">One island. One causeway. Two floods a day.</h1>
+      <p class="muted" style="max-width:60ch;margin-top:1.2rem">Île de tidal sits 900 metres off the Brittany coast, connected by a stone causeway that the sea covers twice daily. Everything about camp logistics starts there.</p>
+    </div>
+  </section>
+  <section class="band">
+    <div class="wrap split">
+      <div class="rv">
+        <h2>The causeway, plainly</h2>
+        <p class="muted">The crossing takes about 15 minutes on foot. It’s walkable for roughly 3–4 hours around each low tide and completely underwater for the rest — up to 2.5 metres at spring tide. Crossing windows are posted every morning on the tide board, taken from the official SHOM tide tables, and every crossing is staff-led. There is no “quick nip back” at half-tide. Ever.</p>
+        <div class="grid g2" style="margin-top:1.5rem">
+          <div class="fact"><b>Crossing length</b><span>900 m</span></div>
+          <div class="fact"><b>Walkable window</b><span>±1h 45m of low</span></div>
+          <div class="fact"><b>Max depth over road</b><span>2.5 m</span></div>
+          <div class="fact"><b>Daily crossings</b><span>2, supervised</span></div>
+        </div>
+      </div>
+      <div class="card rv" style="padding:1.1rem">
+        <svg viewBox="0 0 520 260" width="100%" role="img" aria-label="Cross-section of the causeway: mainland on the left, island on the right, high and low water lines marked over the road between them">
+          <rect x="0" y="0" width="520" height="260" fill="#FBFAF3"/>
+          <g stroke="#CBD6CF" stroke-width="1"><line x1="0" y1="52" x2="520" y2="52"/><line x1="0" y1="104" x2="520" y2="104"/><line x1="0" y1="156" x2="520" y2="156"/><line x1="0" y1="208" x2="520" y2="208"/></g>
+          <path d="M0 120 Q 40 90 80 108 L 80 260 L 0 260 Z" fill="#13505B"/>
+          <path d="M440 112 Q 480 84 520 116 L 520 260 L 440 260 Z" fill="#13505B"/>
+          <path d="M80 160 L 440 160 L 440 176 L 80 176 Z" fill="#3F5B61"/>
+          <rect x="0" y="176" width="520" height="84" fill="rgba(19,80,91,.25)"/>
+          <line x1="0" y1="96" x2="520" y2="96" stroke="#FFC857" stroke-width="2"/>
+          <text x="12" y="88" font-size="11" font-weight="600" letter-spacing="2" fill="#9A6B00" font-family="Spline Sans,sans-serif">HIGH WATER · CAUSEWAY CLOSED</text>
+          <line x1="0" y1="176" x2="520" y2="176" stroke="#13505B" stroke-width="1.5" stroke-dasharray="5 5"/>
+          <text x="12" y="196" font-size="11" font-weight="600" letter-spacing="2" fill="#3F5B61" font-family="Spline Sans,sans-serif">LOW WATER · CROSSING OPEN</text>
+          <text x="30" y="140" font-size="12" font-weight="600" fill="#F2F0E6" font-family="Spline Sans,sans-serif">MAINLAND</text>
+          <text x="452" y="140" font-size="12" font-weight="600" fill="#F2F0E6" font-family="Spline Sans,sans-serif">ISLAND</text>
+          <text x="222" y="152" font-size="11" font-weight="600" letter-spacing="2" fill="#3F5B61" font-family="Spline Sans,sans-serif">CAUSEWAY · 900 M</text>
+        </svg>
+        <p class="muted" style="font-size:.78rem;margin:.8rem 0 0">Cross-section, not to scale. The amber line is the same waterline you’ll see painted in the lab.</p>
+      </div>
+    </div>
+  </section>
+  <section class="band surface">
+    <div class="wrap">
+      <h2 class="wl rv">Life above the waterline</h2>
+      <div class="grid g3 rv" style="margin-top:2rem">
+        <div class="card"><h3>Lodging</h3><p class="muted" style="font-size:.92rem">Campers sleep in the converted lifeboat station — bunk rooms of four, separated by age and gender, staff quarters on the same floor. Warm, dry, and 11 metres above the highest recorded tide.</p></div>
+        <div class="card"><h3>Meals</h3><p class="muted" style="font-size:.92rem">Three meals a day from the island kitchen, heavy on what the boats bring in. Dietary needs handled — just tell us on the form. High-tide lunches happen in the lab, obviously.</p></div>
+        <div class="card"><h3>The lab</h3><p class="muted" style="font-size:.92rem">The old signal house: desks for twelve, reliable power, a satellite uplink for git pushes, and a charging shelf above the painted high-water line.</p></div>
+        <div class="card"><h3>Supervision</h3><p class="muted" style="font-size:.92rem">1:4 staff-to-camper ratio, staff on the island through every high-water window, and a nightly headcount that matches the tide log. First-aid trained, sea-trained, hard to surprise.</p></div>
+        <div class="card"><h3>Safety plan</h3><p class="muted" style="font-size:.92rem">Crossings only in posted windows, always staff-led. When the water is up, nobody crosses — stranded hours are scheduled coding hours, not emergencies. Parents get the full protocol before day one.</p></div>
+        <div class="card"><h3>Leaving mid-tide</h3><p class="muted" style="font-size:.92rem">For genuine needs there’s a small boat and a staff lead on call, so nobody is ever truly trapped. For everything else, departures line up with the low-tide crossings.</p></div>
+      </div>
+      <div class="card rv" style="margin-top:1.5rem">
+        <h3>Getting there</h3>
+        <p class="muted" style="font-size:.92rem">Meet at the mainland departure point — the Saint-Broladre slipway car park — where staff collect campers at the posted low-tide window on day one. Nearest station: Dol-de-Bretagne (taxi ~20 min). Travel to the slipway isn’t included in fees. Arrive early; the tide won’t wait, and neither can we.</p>
+      </div>
+    </div>
+  </section>
+  <section class="cta"><div class="wrap"><p class="kicker">Convinced?</p><h2>The island holds twelve campers per session.</h2><p style="margin:1.5rem 0 0"><a class="btn amber" href="/apply">Apply for a session</a></p></div></section>
+</Layout>
