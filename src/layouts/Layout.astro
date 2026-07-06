@@ -8,7 +8,7 @@ export interface Props {
 }
 const { title, description, path, heroPreload = false } = Astro.props;
 const origin = (Astro.site?.toString() ?? 'https://tidal-codi-8d0dc8a1-shaykovach.wix-site-host.com').replace(/\/$/, '');
-const ogImage = `${origin}/assets/causeway-desktop.jpg`;
+const ogImage = `${origin}/assets/cover.jpg`;
 const nav = [
   { href: '/', label: 'Home' },
   { href: '/program', label: 'Program' },
