@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import TidalFlow from '../components/TidalFlow.astro';
 import { PROJECTS } from '../data/projects';
 const home = PROJECTS.slice(0, 3);
 const courseLd = {
@@ -73,6 +74,11 @@ const courseLd = {
     </div>
   </section>
 
+  <section class="tbanner" aria-hidden="true">
+    <div class="tbanner-wrap"><canvas id="typecanvas"></canvas></div>
+    <p class="tbanner-cap">The disappearing is the whole curriculum</p>
+  </section>
+
   <section class="band">
     <div class="wrap split">
       <div class="rv">
@@ -90,8 +96,9 @@ const courseLd = {
     </div>
   </section>
 
-  <section class="band dark">
-    <div class="wrap">
+  <section class="band dark" style="position:relative;overflow:hidden">
+    <TidalFlow />
+    <div class="wrap" style="position:relative;z-index:1">
       <p class="kicker rv">Projects gallery</p>
       <h2 class="wl rv">What teens shipped while the tide had them surrounded.</h2>
       <div class="grid g3 rv" style="margin-top:2.2rem">
