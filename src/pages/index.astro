@@ -1,6 +1,5 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import TidalFlow from '../components/TidalFlow.astro';
 import { PROJECTS } from '../data/projects';
 const home = PROJECTS.slice(0, 3);
 const courseLd = {
@@ -32,7 +31,6 @@ const courseLd = {
       <source type="image/jpeg" media="(max-width:720px)" srcset="/assets/causeway-mobile.jpg" />
       <img class="hero-img" src="/assets/causeway-desktop.jpg" width="1920" height="1401" fetchpriority="high" decoding="async" alt="A cobblestone causeway leading to a lit stone house on a Brittany island, with the sea coming in around it." />
     </picture>
-    <TidalFlow />
     <div class="hero-coords">48°38′N · 2°02′W<br/>Île de tidal · Bretagne<br/>Semidiurnal · 2 floods / day
       <span class="hero-live" id="hero-live" role="status" aria-live="off"><span class="dot"></span><span id="hl-text">Causeway open · next turn soon</span></span>
     </div>
@@ -65,9 +63,9 @@ const courseLd = {
       <p class="soundings rv">Sounding 03 · How it works</p>
       <h2 class="wl rv">Cross. Code. Cross back when the sea lets you.</h2>
       <div class="grid g3 rv" style="margin-top:2.4rem">
-        <div class="step"><div class="no">01</div><h3>Cross at low tide</h3><p class="muted">Campers walk the causeway during posted, supervised low-tide windows. The tide table is the timetable — it doesn’t negotiate.</p></div>
-        <div class="step"><div class="no">02</div><h3>Code through the high</h3><p class="muted">When the road disappears, the stranded hours begin: real marine datasets, instructors at the next desk, and no way to quit early.</p></div>
-        <div class="step"><div class="no">03</div><h3>Ship before the water drops</h3><p class="muted">Every high tide ends with something committed. Every two weeks ends with a project that says something true about the sea.</p></div>
+        <div class="step"><div class="no">01</div><h3>Cross at low tide</h3><p class="muted">Walk the causeway while the water’s out — always supervised.</p></div>
+        <div class="step"><div class="no">02</div><h3>Code through the high</h3><p class="muted">The road floods, the coding starts. No way out, no way to quit early.</p></div>
+        <div class="step"><div class="no">03</div><h3>Ship before it drops</h3><p class="muted">Every high tide ends with something shipped.</p></div>
       </div>
     </div>
   </section>
@@ -82,7 +80,7 @@ const courseLd = {
       <div class="rv">
         <p class="kicker">The curriculum</p>
         <h2 class="wl">Two weeks, one real dataset.</h2>
-        <p class="muted" style="margin-top:1rem">No tutorial grind. Week one builds the Python and data-literacy footing; week two is one honest marine-data project, tuned and shipped between tides. Beginners start from the first commit; experienced coders go straight to the harder datasets.</p>
+        <p class="muted" style="margin-top:1rem">No tutorial grind — one real marine-data project, built and shipped between the tides. Total beginners and seasoned coders both start on day one.</p>
         <p style="margin-top:1.4rem"><a class="btn ghost" href="/program">See the full program →</a></p>
       </div>
       <div class="grid g2 rv">
@@ -121,7 +119,7 @@ const courseLd = {
       <div class="rv">
         <p class="kicker">The island &amp; safety</p>
         <h2 class="wl">A tide table is a schedule, not a hazard.</h2>
-        <p class="muted" style="margin-top:1rem">Campers cross only during posted low-tide windows, always supervised. When the water is up, nobody crosses — that’s the point. Here’s exactly how we keep it that way.</p>
+        <p class="muted" style="margin-top:1rem">Campers cross only at low tide, always supervised. When the water’s up, nobody crosses — that’s the point.</p>
         <p style="margin-top:1.4rem"><a class="btn ghost" href="/island">Island logistics &amp; the causeway →</a></p>
       </div>
       <div class="grid g2 rv">
@@ -138,10 +136,8 @@ const courseLd = {
       <p class="kicker rv">Voices</p>
       <h2 class="wl rv">Stranded on purpose.</h2>
       <div class="grid g2 rv" style="margin-top:2rem">
-        <blockquote class="card voice" style="margin:0"><q>Getting stranded over high tide is the only reason my drift map ever worked. No escape, no excuses.</q><span class="who"><b>Noah R. · Camper, 15</b><span class="muted">Came for two weeks, stayed for the second session.</span></span></blockquote>
-        <blockquote class="card voice" style="margin:0"><q>I learned more in one flooded afternoon than a year of online tutorials.</q><span class="who"><b>Amira K. · Camper, 16</b><span class="muted">Now mentors the neap-tide cohort.</span></span></blockquote>
-        <blockquote class="card voice" style="margin:0"><q>I worried about the causeway for a week. Then I saw the tide board and the staff ratios and I stopped.</q><span class="who"><b>Élodie M. · Parent of a 14-year-old</b><span class="muted">Sent her second child the following summer.</span></span></blockquote>
-        <blockquote class="card voice" style="margin:0"><q>She came home with a repo, a sunburn, and a very strong opinion about limpets. Worth every euro.</q><span class="who"><b>Marc D. · Parent of a 16-year-old</b><span class="muted">Asked if there was an adult version. There isn’t.</span></span></blockquote>
+        <blockquote class="card voice" style="margin:0"><q>Getting stranded over high tide is the only reason my drift map ever worked.</q><span class="who"><b>Noah R. · Camper, 15</b></span></blockquote>
+        <blockquote class="card voice" style="margin:0"><q>She came home with a repo, a sunburn, and a very strong opinion about limpets.</q><span class="who"><b>Marc D. · Parent</b></span></blockquote>
       </div>
     </div>
   </section>
@@ -213,7 +209,7 @@ const courseLd = {
       ctx.beginPath(); for (let x = 0; x <= W; x += 6) { const y = waveY(x, time, base); x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y); }
       ctx.strokeStyle = '#FFC857'; ctx.lineWidth = 3; ctx.stroke();
     }
-    function loop() { if (visible && !document.hidden) { time += 0.02; render(); } requestAnimationFrame(loop); }
+    function loop() { if (visible && !document.hidden) { time += 0.008; render(); } requestAnimationFrame(loop); }
     size(); addEventListener('resize', () => { size(); render(); });
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { size(); render(); });
     new IntersectionObserver((es) => es.forEach((e) => { visible = e.isIntersecting; })).observe(cv);
