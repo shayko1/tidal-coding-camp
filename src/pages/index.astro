@@ -26,10 +26,9 @@ const courseLd = {
 
   <header class="hero">
     <picture>
-      <source type="image/webp" media="(max-width:720px)" srcset="/assets/causeway-golden-mobile.webp" sizes="100vw" />
-      <source type="image/webp" media="(min-width:721px)" srcset="/assets/causeway-golden-1024.webp 1024w, /assets/causeway-golden-1440.webp 1440w, /assets/causeway-golden-1920.webp 1920w" sizes="100vw" />
-      <source type="image/jpeg" media="(max-width:720px)" srcset="/assets/causeway-mobile.jpg" />
-      <img class="hero-img" src="/assets/causeway-desktop.jpg" width="1920" height="1401" fetchpriority="high" decoding="async" alt="A cobblestone causeway leading to a lit stone house on a Brittany island, with the sea coming in around it." />
+      <source type="image/webp" media="(max-width:720px)" srcset="/assets/hero-kids-mobile.webp" sizes="100vw" />
+      <source type="image/webp" media="(min-width:721px)" srcset="/assets/hero-kids-1024.webp 1024w, /assets/hero-kids-1440.webp 1440w, /assets/hero-kids-1920.webp 1920w" sizes="100vw" />
+      <img class="hero-img" src="/assets/hero-kids-1440.jpg" width="1920" height="1107" fetchpriority="high" decoding="async" alt="Three teenagers laughing while coding on laptops on a sunny deck by the sea, a small tidal island behind them." />
     </picture>
     <div class="hero-coords">48°38′N · 2°02′W<br/>Île de tidal · Bretagne<br/>Semidiurnal · 2 floods / day
       <span class="hero-live" id="hero-live" role="status" aria-live="off"><span class="dot"></span><span id="hl-text">Causeway open · next turn soon</span></span>
@@ -61,9 +60,17 @@ const courseLd = {
     </div>
   </section>
 
-  <section class="tbanner" aria-hidden="true">
-    <div class="tbanner-wrap"><canvas id="typecanvas"></canvas></div>
-    <p class="tbanner-cap">The disappearing is the whole curriculum</p>
+  <section class="band surface">
+    <div class="wrap">
+      <p class="kicker rv">Life at camp</p>
+      <h2 class="wl rv">Sun, sea, and a lot of code.</h2>
+      <div class="gallery rv">
+        <figure class="shot"><img src="/assets/camp-crossing.webp" width="900" height="519" loading="lazy" decoding="async" alt="Campers walking the causeway toward the island at low tide" /><figcaption>Crossing at low tide</figcaption></figure>
+        <figure class="shot"><img src="/assets/camp-lab.webp" width="900" height="519" loading="lazy" decoding="async" alt="Teens coding on laptops at a table overlooking the sea" /><figcaption>The lab</figcaption></figure>
+        <figure class="shot"><img src="/assets/camp-demo.webp" width="900" height="519" loading="lazy" decoding="async" alt="A camper presenting her data chart to the group on demo day" /><figcaption>Demo day</figcaption></figure>
+        <figure class="shot"><img src="/assets/camp-rocks.webp" width="900" height="519" loading="lazy" decoding="async" alt="Two teens coding together on the rocks by the water" /><figcaption>Field coding</figcaption></figure>
+      </div>
+    </div>
   </section>
 
   <section class="band">
