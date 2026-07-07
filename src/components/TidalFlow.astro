@@ -1,8 +1,8 @@
 ---
 // Signature hero background: code characters flowing down like a tidal current.
-// Extracted from the p5 flow-field sketch, run in instance mode, brand-recoloured,
-// desktop-only, and gated on visibility + prefers-reduced-motion so it never
-// touches LCP/INP. p5 is dynamically imported (code-split) after the hero paints.
+// Self-contained vanilla-canvas flow field (no p5 dependency) — brand-recoloured,
+// desktop-only, gated on visibility + prefers-reduced-motion, DPR-capped, so it
+// never touches LCP/INP and adds only ~2KB to the page.
 ---
 <div class="hero-fx" data-tidal-flow aria-hidden="true"></div>
 
@@ -11,101 +11,79 @@
   const el = document.querySelector('[data-tidal-flow]');
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const small = matchMedia('(max-width: 860px)').matches;
-  // Progressive enhancement: skip the effect where it would cost more than it gives.
+  // Progressive enhancement: skip where it would cost more than it gives.
   if (el && !reduce && !small) {
-    const PARAMS = {
+    const P = {
       chars: '{} <> // 01 const let function return => ; : tide flow'.split(/\s+/),
-      fontSize: 15,
-      density: 170,
-      flowSpeed: 1.2,
-      turbulence: 2.6,
-      primary: '#8FC9D4',   // sea-glass (reads on the dark teal photo)
-      highlight: '#FFC857', // amber — matches the sitewide waterline
-      trailOpacity: 12,
+      fontSize: 15, density: 170, flowSpeed: 1.2, turbulence: 2.6,
+      primary: [143, 201, 212],   // sea-glass
+      highlight: [255, 200, 87],  // amber (sitewide waterline)
+      trail: 0.12,
     };
+    const cv = document.createElement('canvas');
+    const ctx = cv.getContext('2d');
+    el.appendChild(cv);
+    let W = 0, H = 0, dpr = 1, t = 0, running = false, raf = 0;
+    const parts = [];
 
-    const start = async () => {
-      const p5 = (await import('p5')).default;
-      const scl = 40;
-      const sketch = (p) => {
-        let particles = [];
-        let zoff = 0;
-        const w = () => el.clientWidth, h = () => el.clientHeight;
-
-        class Particle {
-          constructor() { this.reset(true); }
-          reset(init = false) {
-            this.pos = init ? p.createVector(p.random(w()), p.random(h())) : p.createVector(p.random(w()), -30);
-            this.vel = p.createVector(0, 0);
-            this.acc = p.createVector(0, 0);
-            this.speedMult = p.random(0.4, 1.6);
-            this.sizeMult = p.random(0.5, 1.5);
-            this.opacity = p.random(70, 235);
-            this.isHighlight = p.random() < 0.15;
-            this.char = p.random(PARAMS.chars);
-          }
-          update(flowField, cols, rows) {
-            const x = p.floor(p.constrain(this.pos.x / scl, 0, cols - 1));
-            const y = p.floor(p.constrain(this.pos.y / scl, 0, rows - 1));
-            const force = flowField[x + y * cols];
-            if (force) this.acc.add(force);
-            this.vel.add(this.acc);
-            this.vel.limit(PARAMS.flowSpeed * 4 * this.speedMult);
-            this.pos.add(this.vel);
-            this.acc.mult(0);
-            const m = 50;
-            if (this.pos.x < -m || this.pos.x > w() + m || this.pos.y < -m || this.pos.y > h() + m) this.reset();
-          }
-          draw() {
-            p.textSize(PARAMS.fontSize * this.sizeMult);
-            const c = p.color(this.isHighlight ? PARAMS.highlight : PARAMS.primary);
-            c.setAlpha(this.opacity);
-            p.fill(c);
-            p.text(this.char, this.pos.x, this.pos.y);
-          }
-        }
-
-        p.setup = () => {
-          const c = p.createCanvas(w(), h());
-          c.parent(el);
-          p.pixelDensity(Math.min(1.5, window.devicePixelRatio || 1));
-          p.textFont('monospace');
-          p.textAlign(p.CENTER, p.CENTER);
-          p.noStroke();
-          for (let i = 0; i < PARAMS.density; i++) particles.push(new Particle());
-        };
-
-        p.draw = () => {
-          p.drawingContext.globalCompositeOperation = 'destination-out';
-          p.drawingContext.fillStyle = `rgba(0,0,0,${PARAMS.trailOpacity / 100})`;
-          p.drawingContext.fillRect(0, 0, p.width, p.height);
-          p.drawingContext.globalCompositeOperation = 'source-over';
-
-          const cols = p.ceil(p.width / scl) + 1;
-          const rows = p.ceil(p.height / scl) + 1;
-          const flowField = new Array(cols * rows);
-          const baseDir = p.createVector(0, 1); // Downward — the tide coming in
-          for (let y = 0; y < rows; y++) {
-            for (let x = 0; x < cols; x++) {
-              const angle = p.noise(x * 0.1, y * 0.1, zoff) * p.TWO_PI * PARAMS.turbulence;
-              const nf = p5.Vector.fromAngle(angle).mult(0.5);
-              flowField[x + y * cols] = p5.Vector.add(baseDir, nf).normalize().mult(0.15);
-            }
-          }
-          zoff += PARAMS.flowSpeed * 0.005;
-          for (const pt of particles) { pt.update(flowField, cols, rows); pt.draw(); }
-        };
-
-        p.windowResized = () => p.resizeCanvas(w(), h());
-      };
-
-      const inst = new p5(sketch);
-      // Pause when the hero scrolls out of view — saves cycles + battery.
-      const io = new IntersectionObserver((es) => es.forEach((e) => (e.isIntersecting ? inst.loop() : inst.noLoop())));
-      io.observe(el);
-    };
-
-    if ('requestIdleCallback' in window) requestIdleCallback(start, { timeout: 2000 });
-    else addEventListener('load', () => setTimeout(start, 400));
+    function size() {
+      dpr = Math.min(1.5, window.devicePixelRatio || 1);
+      W = el.clientWidth; H = el.clientHeight;
+      cv.width = Math.max(1, Math.round(W * dpr));
+      cv.height = Math.max(1, Math.round(H * dpr));
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    }
+    function spawn(p, init) {
+      p.x = Math.random() * W;
+      p.y = init ? Math.random() * H : -30;
+      p.vx = 0; p.vy = 0;
+      p.sm = 0.4 + Math.random() * 1.2;   // speed mult
+      p.zm = 0.5 + Math.random() * 1.0;   // size mult
+      p.op = 0.28 + Math.random() * 0.64; // opacity
+      p.hi = Math.random() < 0.15;
+      p.c = P.chars[(Math.random() * P.chars.length) | 0];
+      return p;
+    }
+    // Smooth, mostly-downward flow with turbulence (layered trig — no Perlin needed).
+    function flow(x, y, time) {
+      const a = (Math.sin(x * 0.015 + time) + Math.cos(y * 0.017 - time * 1.1) + Math.sin((x + y) * 0.008 + time * 0.6)) * (P.turbulence * 0.35);
+      let fx = Math.cos(a) * 0.5, fy = 1 + Math.sin(a) * 0.5; // base direction = down
+      const m = Math.hypot(fx, fy) || 1;
+      return [(fx / m) * 0.15, (fy / m) * 0.15];
+    }
+    function frame() {
+      raf = requestAnimationFrame(frame);
+      if (!running || document.hidden) return;
+      // fade previous frame (keeps canvas transparent — trails)
+      ctx.globalCompositeOperation = 'destination-out';
+      ctx.fillStyle = `rgba(0,0,0,${P.trail})`;
+      ctx.fillRect(0, 0, W, H);
+      ctx.globalCompositeOperation = 'source-over';
+      t += P.flowSpeed * 0.01;
+      for (const p of parts) {
+        const [ax, ay] = flow(p.x, p.y, t);
+        p.vx += ax; p.vy += ay;
+        const max = P.flowSpeed * 3.4 * p.sm, sp = Math.hypot(p.vx, p.vy);
+        if (sp > max) { p.vx = (p.vx / sp) * max; p.vy = (p.vy / sp) * max; }
+        p.x += p.vx; p.y += p.vy;
+        if (p.x < -40 || p.x > W + 40 || p.y < -40 || p.y > H + 40) spawn(p, false);
+        const col = p.hi ? P.highlight : P.primary;
+        ctx.fillStyle = `rgba(${col[0]},${col[1]},${col[2]},${p.op})`;
+        ctx.font = `${(P.fontSize * p.zm) | 0}px monospace`;
+        ctx.fillText(p.c, p.x, p.y);
+      }
+    }
+    function boot() {
+      size();
+      for (let i = 0; i < P.density; i++) parts.push(spawn({}, true));
+      addEventListener('resize', size, { passive: true });
+      new IntersectionObserver((es) => es.forEach((e) => { running = e.isIntersecting; }))
+        .observe(el);
+      running = true;
+      raf = requestAnimationFrame(frame);
+    }
+    if ('requestIdleCallback' in window) requestIdleCallback(boot, { timeout: 2000 });
+    else addEventListener('load', () => setTimeout(boot, 400));
   }
 </script>
