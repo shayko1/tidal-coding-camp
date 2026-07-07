@@ -112,6 +112,7 @@ section{padding:clamp(3.5rem,7vw,6rem) 0}
 .dayrow b{font:600 .7rem/1.9 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
 /* schedule */
 .tideboard{display:grid;gap:2.5rem}
+.tideboard>*,.split>*{min-width:0}
 @media(min-width:920px){.tideboard{grid-template-columns:1fr 1fr;align-items:start}.clockcard{position:sticky;top:80px}}
 .clockcard{background:#10303A;border:1px solid rgba(242,240,230,.14);border-radius:16px;padding:1.5rem}
 .clock-readout{display:flex;flex-wrap:wrap;gap:1.3rem;margin-top:1rem}
@@ -128,8 +129,8 @@ section{padding:clamp(3.5rem,7vw,6rem) 0}
 .rhythm .chip{border-color:rgba(242,240,230,.3);color:#9FB6BA}
 .rhythm li.stranded{background:linear-gradient(90deg,rgba(255,200,87,.07),transparent);border-left:2px solid var(--amber);padding-left:1rem;margin-left:-1rem}
 .rhythm li.stranded .chip{border-color:var(--amber);color:var(--amber)}
-.table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin-top:1rem}
-.almanac{width:100%;border-collapse:collapse;font-size:.88rem;min-width:460px}
+.table-scroll{overflow-x:auto;max-width:100%;-webkit-overflow-scrolling:touch;margin-top:1rem}
+.almanac{width:100%;border-collapse:collapse;font-size:.88rem;min-width:440px}
 .almanac th,.almanac td{padding:.65rem .5rem;text-align:left;border-bottom:1px solid rgba(242,240,230,.14)}
 .almanac th{font:600 .64rem var(--sans);letter-spacing:.16em;text-transform:uppercase;color:#9FB6BA}
 .almanac td.hi{color:var(--amber)}
