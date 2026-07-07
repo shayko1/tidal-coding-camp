@@ -6,25 +6,29 @@ import Layout from '../layouts/Layout.astro';
   description="The daily camp rhythm mapped to the real Brittany tide tables, plus a live tide clock and a 7-day tide almanac. Stranded hours are scheduled debugging hours."
   path="/schedule"
 >
-  <section class="dark" style="background:var(--dark);color:var(--on-dark)">
+  <section class="pagehero" style="--hero-img:url(/assets/camp-lab.webp)">
     <div class="wrap">
       <p class="kicker">Tide Schedule</p>
-      <h1 style="font-size:clamp(2.2rem,6vw,4.2rem)">The water writes the timetable.</h1>
-      <p class="muted" style="max-width:58ch;margin-top:1rem">Every camp day maps onto the official tide tables. Below: the live tide clock for the island, today’s rhythm, and the almanac for the week ahead.</p>
-      <div class="tideboard" style="margin-top:2.6rem">
+      <h1 style="font-size:clamp(2.2rem,6vw,4.2rem)" class="wl">The water writes the timetable.</h1>
+      <p class="muted" style="max-width:44ch;margin-top:1.2rem">Every camp day is mapped to the real tide tables.</p>
+    </div>
+  </section>
+  <section class="band dark">
+    <div class="wrap">
+      <div class="tideboard">
         <div class="clockcard">
           <p class="kicker" style="margin-bottom:.4rem">Live tide clock · Île de tidal</p>
           <svg id="tideclock" viewBox="0 0 320 320" width="100%" style="max-width:320px;margin:auto;display:block" role="img" aria-label="Live tide clock showing the current point in the tide cycle">
             <defs><clipPath id="bowl"><circle cx="160" cy="160" r="128"/></clipPath></defs>
-            <circle cx="160" cy="160" r="150" fill="none" stroke="rgba(242,240,230,.18)" stroke-width="1.5"/>
-            <circle cx="160" cy="160" r="128" fill="#0C2329" stroke="rgba(242,240,230,.25)" stroke-width="1.5"/>
-            <g clip-path="url(#bowl)"><rect id="tc-water" x="20" y="160" width="280" height="280" fill="rgba(19,80,91,.85)"/><path id="tc-wave" d="" fill="none" stroke="#FFC857" stroke-width="2.5" stroke-linecap="round"/></g>
-            <g id="tc-ticks" stroke="rgba(242,240,230,.4)"></g>
-            <text x="160" y="34" text-anchor="middle" fill="#FFC857" font-size="12" font-weight="600" letter-spacing="3" font-family="Spline Sans,sans-serif">HIGH</text>
-            <text x="160" y="298" text-anchor="middle" fill="#9FB6BA" font-size="12" font-weight="600" letter-spacing="3" font-family="Spline Sans,sans-serif">LOW</text>
-            <g id="tc-needle" transform="rotate(0 160 160)"><line x1="160" y1="160" x2="160" y2="46" stroke="#FFC857" stroke-width="3" stroke-linecap="round"/><circle cx="160" cy="160" r="7" fill="#FFC857"/></g>
-            <text id="tc-pct" x="160" y="200" text-anchor="middle" fill="#F2F0E6" font-size="30" font-family="Gloock,serif">–%</text>
-            <text x="160" y="222" text-anchor="middle" fill="#9FB6BA" font-size="10" letter-spacing="2.5" font-family="Spline Sans,sans-serif">WATER OVER CAUSEWAY</text>
+            <circle cx="160" cy="160" r="150" fill="none" stroke="rgba(253,246,231,.18)" stroke-width="1.5"/>
+            <circle cx="160" cy="160" r="128" fill="#0E3A44" stroke="rgba(253,246,231,.25)" stroke-width="1.5"/>
+            <g clip-path="url(#bowl)"><rect id="tc-water" x="20" y="160" width="280" height="280" fill="rgba(17,110,124,.9)"/><path id="tc-wave" d="" fill="none" stroke="#FFC24B" stroke-width="2.5" stroke-linecap="round"/></g>
+            <g id="tc-ticks" stroke="rgba(253,246,231,.4)"></g>
+            <text x="160" y="34" text-anchor="middle" fill="#FFC24B" font-size="12" font-weight="600" letter-spacing="3" font-family="Spline Sans,sans-serif">HIGH</text>
+            <text x="160" y="298" text-anchor="middle" fill="#AEC8CC" font-size="12" font-weight="600" letter-spacing="3" font-family="Spline Sans,sans-serif">LOW</text>
+            <g id="tc-needle" transform="rotate(0 160 160)"><line x1="160" y1="160" x2="160" y2="46" stroke="#FFC24B" stroke-width="3" stroke-linecap="round"/><circle cx="160" cy="160" r="7" fill="#FFC24B"/></g>
+            <text id="tc-pct" x="160" y="200" text-anchor="middle" fill="#FDF6E7" font-size="30" font-weight="600" font-family="Fredoka,sans-serif">–%</text>
+            <text x="160" y="222" text-anchor="middle" fill="#AEC8CC" font-size="10" letter-spacing="2.5" font-family="Spline Sans,sans-serif">WATER OVER CAUSEWAY</text>
           </svg>
           <div style="text-align:center;margin-top:1rem"><span class="status-pill" id="tc-status"><span class="dot"></span><span id="tc-status-text">Reading the water…</span></span></div>
           <div class="clock-readout">
@@ -32,23 +36,23 @@ import Layout from '../layouts/Layout.astro';
             <div><b>Tide is</b><span id="tc-dir">—</span></div>
             <div><b>Cycle</b><span>12h 25m</span></div>
           </div>
-          <p class="muted" style="font-size:.74rem;margin-top:1rem">Live graphic driven by a semidiurnal model of the island’s tide. During camp, the board in the mess hall shows the official SHOM tables — those win every argument.</p>
+          <p class="muted" style="font-size:.74rem;margin-top:1rem">A live model of the island’s tide. On camp, the mess-hall board shows the official SHOM tables.</p>
         </div>
         <div>
-          <h2 class="wl" style="font-size:clamp(1.6rem,4vw,2.4rem)">A camp day, mapped to the water</h2>
+          <h2 class="wl" style="font-size:clamp(1.6rem,4vw,2.4rem)">A day, mapped to the water</h2>
           <ul class="rhythm">
-            <li><time>07:40</time><div class="what"><b>Low-tide crossing</b><span>Supervised walk over the causeway, tide-board briefing at breakfast</span></div><span class="chip">Cross</span></li>
-            <li><time>09:00</time><div class="what"><b>Dataset lab</b><span>Python, pandas, field-journal notes — water still falling</span></div><span class="chip">Build</span></li>
-            <li class="stranded"><time>12:20</time><div class="what"><b>Causeway closes</b><span>Stranded debugging hours begin. Lunch happens; leaving doesn’t.</span></div><span class="chip">Stranded</span></li>
-            <li class="stranded"><time>14:00</time><div class="what"><b>Deep work block</b><span>Project build with instructors at the next desk — the tide holds everyone to it</span></div><span class="chip">Stranded</span></li>
-            <li><time>16:50</time><div class="what"><b>Water drops</b><span>Demos and code review while the causeway drains</span></div><span class="chip">Review</span></li>
-            <li><time>17:40</time><div class="what"><b>Return crossing</b><span>Supervised window back to the mainland — or stay for the evening session</span></div><span class="chip">Cross</span></li>
+            <li><time>07:40</time><div class="what"><b>Low-tide crossing</b><span>Supervised walk over the causeway.</span></div><span class="chip">Cross</span></li>
+            <li><time>09:00</time><div class="what"><b>Dataset lab</b><span>Python and pandas — water still falling.</span></div><span class="chip">Build</span></li>
+            <li class="stranded"><time>12:20</time><div class="what"><b>Causeway closes</b><span>Stranded hours begin. Leaving doesn’t.</span></div><span class="chip">Stranded</span></li>
+            <li class="stranded"><time>14:00</time><div class="what"><b>Deep work</b><span>Build, instructor at the next desk.</span></div><span class="chip">Stranded</span></li>
+            <li><time>16:50</time><div class="what"><b>Water drops</b><span>Demos and code review.</span></div><span class="chip">Review</span></li>
+            <li><time>17:40</time><div class="what"><b>Return crossing</b><span>Back to the mainland.</span></div><span class="chip">Cross</span></li>
           </ul>
-          <p class="muted" style="font-size:.85rem;margin-top:1rem">Times shift roughly 50 minutes later each day, exactly like the tide. The rhythm holds; the clock drifts.</p>
-          <h3 style="margin-top:2.4rem" class="wl">Tide almanac — next 7 days</h3>
+          <p class="muted" style="font-size:.85rem;margin-top:1rem">Times shift ~50 minutes later each day, like the tide.</p>
+          <h3 style="margin-top:2.4rem" class="wl">Almanac — next 7 days</h3>
           <div class="table-scroll">
             <table class="almanac" id="almanac">
-              <thead><tr><th>Day</th><th>High water</th><th>Low water</th><th>High water</th><th>Crossing windows</th></tr></thead>
+              <thead><tr><th>Day</th><th>High</th><th>Low</th><th>High</th><th>Crossing windows</th></tr></thead>
               <tbody></tbody>
             </table>
           </div>
