@@ -1,12 +1,12 @@
 ---
 import Layout from '../layouts/Layout.astro';
 const faqs = [
-  { q: 'Is the causeway actually safe?', a: "Yes, and it’s central to how we run the day. Campers only cross during posted low-tide windows, always supervised, and we plan every session around the official Brittany tide tables. When the water’s up, nobody crosses â that’s the point. Stranded hours are scheduled coding hours, not emergencies." },
-  { q: 'How much coding experience does my teen need?', a: 'None to intermediate. We ask about experience on the application so we can place campers in the right cohort. Total beginners learn Python from the first commit; kids who already code go straight into the harder marine datasets.' },
-  { q: "What does the two weeks cost, and what’s included?", a: "Fees cover lodging on the island, meals, all supervision, and the full program. We list the per-session fee and what’s included on the Program page. Travel to the mainland departure point isn’t included." },
-  { q: 'What should my teen bring?', a: "A laptop that can run Python, weatherproof shoes for the crossing, and a refillable water bottle. We provide all the datasets, the dev environment, and a charging spot above the high-water line. A full gear list goes out once you’re accepted." },
-  { q: 'How are campers supervised over the high tide?', a: "There’s always staff on the island through every high-water window, with a posted ratio you’ll see on the Island page. Instructors stay through the stranded hours because that’s when most of the real debugging happens." },
-  { q: 'What if my teen needs to leave during a high tide?', a: "For genuine needs we have a small boat and a staff lead on call, so nobody’s ever truly trapped. For everything else, the schedule is built so departures line up with the low-tide crossings." },
+  { q: 'Is the causeway safe?', a: 'Yes — campers only cross at low tide, always supervised. When the water’s up, nobody crosses.' },
+  { q: 'How much coding experience is needed?', a: 'None to intermediate. Total beginners learn Python from day one.' },
+  { q: 'What does it cost?', a: '€2,450 for two weeks — lodging, meals, and supervision included.' },
+  { q: 'What should my teen bring?', a: 'A laptop that runs Python, weatherproof shoes, and a water bottle. We provide the rest.' },
+  { q: 'How are campers supervised at high tide?', a: 'Staff stay on the island through every high tide, at a 1:4 ratio.' },
+  { q: 'What if my teen needs to leave at high tide?', a: 'For real needs there’s a boat and a staff lead on call. Otherwise, departures are at low tide.' },
 ];
 const faqLd = {
   '@context': 'https://schema.org', '@type': 'FAQPage',
@@ -15,7 +15,7 @@ const faqLd = {
 ---
 <Layout
   title="FAQ — Tidal Coding Camp"
-  description="Safety, cost, gear, supervision, and tide questions parents ask first about a teen summer coding camp on a Brittany tidal island."
+  description="Safety, cost, gear, and tide questions parents ask first about the camp."
   path="/faq"
 >
   <script type="application/ld+json" slot="head" set:html={JSON.stringify(faqLd)} />
@@ -23,8 +23,8 @@ const faqLd = {
     <div class="wrap split">
       <div>
         <p class="kicker">FAQ</p>
-        <h1 style="font-size:clamp(2.2rem,6vw,4rem)" class="wl">The questions parents ask first.</h1>
-        <p class="muted" style="margin-top:1.2rem">Safety, cost, gear, and the tide — answered plainly. Anything else, put it in the “question for us” box on the application.</p>
+        <h1 style="font-size:clamp(2.2rem,6vw,4rem)" class="wl">Parent questions.</h1>
+        <p class="muted" style="margin-top:1.2rem">The tide, the safety, the cost — answered plainly.</p>
         <p style="margin-top:1.4rem"><a class="btn" href="/apply">Apply for a session</a></p>
       </div>
       <div class="faq">

@@ -3,38 +3,38 @@ import Layout from '../layouts/Layout.astro';
 ---
 <Layout
   title="The Program — Tidal Coding Camp"
-  description="Two weeks, one real marine dataset, one project worth showing. A tide-timed coding curriculum for teens 13–17, with cohorts, dates, and fees."
+  description="Two weeks, one real project. A tide-timed coding camp for ages 13–17 — dates, cohorts, and fees."
   path="/program"
 >
   <section class="surface">
     <div class="wrap">
       <p class="kicker">The Program</p>
-      <h1 style="font-size:clamp(2.2rem,6vw,4.2rem)" class="wl">Two weeks, one real dataset, one project worth showing.</h1>
-      <p class="muted" style="max-width:60ch;margin-top:1.2rem">A marine-data coding curriculum for 13–17-year-olds, paced by the tide. Mornings on the mainland side of the water, stranded hours in the lab, demos when the causeway reopens.</p>
+      <h1 style="font-size:clamp(2.2rem,6vw,4.2rem)" class="wl">Two weeks. One real project.</h1>
+      <p class="muted" style="max-width:44ch;margin-top:1.2rem">A coding camp for ages 13–17, paced by the tide.</p>
     </div>
   </section>
   <section class="band">
     <div class="wrap split rev">
       <div class="grid rv">
         <div class="weekplan">
-          <header><h3>Week 1 — Sea legs</h3><span>Foundations</span></header>
-          <div class="dayrow"><b>Mon–Tue</b><div>Python from the first commit: variables to functions via real tide-gauge readings. Set up the field journal.</div></div>
-          <div class="dayrow"><b>Wed</b><div>Coastal data literacy — what a dataset can and can’t say. Parsing the official Brittany tide tables.</div></div>
-          <div class="dayrow"><b>Thu</b><div>Plotting with pandas &amp; matplotlib. First chart pinned to the lab wall like a specimen.</div></div>
-          <div class="dayrow"><b>Fri</b><div>Shore survey day: collect your own data at low tide, clean it during the high.</div></div>
-          <div class="dayrow"><b>Sat</b><div>Mini-dashboard build. Pick your Week-2 dataset and question. Sunday: tide-locked rest day.</div></div>
+          <header><h3>Week 1 — Sea legs</h3><span>Learn</span></header>
+          <div class="dayrow"><b>Mon–Tue</b><div>Python basics: variables, loops, functions.</div></div>
+          <div class="dayrow"><b>Wed</b><div>Reading data — what the tide tables really say.</div></div>
+          <div class="dayrow"><b>Thu</b><div>Your first charts with pandas and matplotlib.</div></div>
+          <div class="dayrow"><b>Fri</b><div>Collect your own data at low tide.</div></div>
+          <div class="dayrow"><b>Sat</b><div>Pick your project. (Sunday: rest.)</div></div>
         </div>
         <div class="weekplan">
-          <header><h3>Week 2 — The project</h3><span>Build &amp; ship</span></header>
-          <div class="dayrow"><b>Mon–Wed</b><div>Project build: mapping overlays, tiny classifiers, sensor timestamp wrangling — scoped to your question, instructor at the next desk.</div></div>
-          <div class="dayrow"><b>Thu</b><div>Model tuning and critique. The high tide is scheduled debugging: nobody leaves mid-bug, because nobody can.</div></div>
-          <div class="dayrow"><b>Fri</b><div>Freeze the repo. Write the README like a field report.</div></div>
-          <div class="dayrow"><b>Sat</b><div><b style="color:var(--accent)">Demo day</b> — five minutes per camper, above the waterline, parents welcome on the low-tide crossing.</div></div>
+          <header><h3>Week 2 — The project</h3><span>Build</span></header>
+          <div class="dayrow"><b>Mon–Wed</b><div>Build it, instructor at the next desk.</div></div>
+          <div class="dayrow"><b>Thu</b><div>Test and debug — high tide is bug-fixing time.</div></div>
+          <div class="dayrow"><b>Fri</b><div>Freeze the repo. Write the README.</div></div>
+          <div class="dayrow"><b>Sat</b><div><b style="color:var(--accent)">Demo day</b> — five minutes each, parents welcome.</div></div>
         </div>
       </div>
       <div class="rv">
-        <p class="kicker">Dates &amp; cohorts</p>
-        <h2>Summer 2026 sessions</h2>
+        <p class="kicker">Summer 2026</p>
+        <h2>Sessions</h2>
         <table class="sessions" style="margin:1.5rem 0 2rem">
           <thead><tr><th>Session</th><th>Dates</th><th>Cohort</th></tr></thead>
           <tbody>
@@ -45,8 +45,8 @@ import Layout from '../layouts/Layout.astro';
           </tbody>
         </table>
         <div class="card">
-          <h3>Fees &amp; what’s included</h3>
-          <p class="muted" style="font-size:.92rem">€2,450 per two-week session. Covers island lodging, all meals, full supervision, datasets, the dev environment, and a charging spot above the high-water line. Travel to the mainland departure point isn’t included. A small number of tide scholarships are available — ask on the form.</p>
+          <h3>Fees</h3>
+          <p class="muted" style="font-size:.92rem">€2,450 for two weeks — lodging, meals, supervision, and gear included. A few scholarships available.</p>
           <p style="margin-top:1rem"><a class="btn" href="/apply">Apply for a session</a></p>
         </div>
       </div>
@@ -54,12 +54,12 @@ import Layout from '../layouts/Layout.astro';
   </section>
   <section class="band dark">
     <div class="wrap split">
-      <div class="rv"><p class="kicker">Our story</p><h2 class="wl">Why we built a camp around getting stranded</h2></div>
+      <div class="rv"><p class="kicker">Our story</p><h2 class="wl">Why a camp about getting stranded</h2></div>
       <div class="rv">
-        <p class="muted">We started Tidal Coding Camp because the island taught us patience before it taught us anything else. The causeway to our place in Brittany floods twice a day, and for years that felt like a problem. Then one summer a visiting student got stranded over a high tide with a half-broken script, no way to leave, and nothing to do but fix it. She fixed it.</p>
-        <p class="muted">That was the whole lesson: a deadline you can’t walk away from is the best teacher in coding. So we built a camp around it. Teens cross the causeway at low tide, work real marine datasets through the high water, and cross back when the sea allows. The tide tables set the schedule, the stranded hours do the teaching, and the projects end up being about the sea because the sea is right there, surrounding the work.</p>
+        <p class="muted">A student once got stranded over a high tide with a half-broken script and nothing to do but fix it. She did.</p>
+        <p class="muted">That’s the whole idea: a deadline you can’t walk away from is the best teacher in coding.</p>
       </div>
     </div>
   </section>
-  <section class="cta"><div class="wrap"><p class="kicker">Ready?</p><h2>Four sessions. Small cohorts. One causeway.</h2><p style="margin:1.5rem 0 0"><a class="btn amber" href="/apply">Apply for a session</a></p></div></section>
+  <section class="cta"><div class="wrap"><p class="kicker">Ready?</p><h2>Four sessions. Small cohorts.</h2><p style="margin:1.5rem 0 0"><a class="btn amber" href="/apply">Apply for a session</a></p></div></section>
 </Layout>
