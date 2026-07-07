@@ -46,10 +46,12 @@ import Layout from '../layouts/Layout.astro';
           </ul>
           <p class="muted" style="font-size:.85rem;margin-top:1rem">Times shift roughly 50 minutes later each day, exactly like the tide. The rhythm holds; the clock drifts.</p>
           <h3 style="margin-top:2.4rem" class="wl">Tide almanac — next 7 days</h3>
-          <table class="almanac" id="almanac" style="margin-top:1rem">
-            <thead><tr><th>Day</th><th>High water</th><th>Low water</th><th>High water</th><th>Crossing windows</th></tr></thead>
-            <tbody></tbody>
-          </table>
+          <div class="table-scroll">
+            <table class="almanac" id="almanac">
+              <thead><tr><th>Day</th><th>High water</th><th>Low water</th><th>High water</th><th>Crossing windows</th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
         </div>
       </div>
       <p style="margin-top:2.6rem"><a class="btn amber" href="/apply">Apply for a session</a></p>
