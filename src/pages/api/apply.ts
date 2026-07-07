@@ -1,8 +1,9 @@
 import type { APIRoute } from 'astro';
+import { items } from '@wix/data';
+import { auth } from '@wix/essentials';
 
 export const prerender = false;
 
-// Fields we accept from the application form (mirrors the "Applications" CMS collection).
 const FIELDS = [
   'camperFirstName', 'camperAge', 'parentName', 'parentEmail',
   'preferredSession', 'codingExperience', 'parentConsentAcknowledged', 'questionForUs',
@@ -10,11 +11,7 @@ const FIELDS = [
 
 export const POST: APIRoute = async ({ request }) => {
   let body: Record<string, unknown>;
-  try {
-    body = await request.json();
-  } catch {
-    return json({ ok: false, error: 'invalid_json' }, 400);
-  }
+  try { body = await request.json(); } catch { return json({ ok: false, error: 'invalid_json' }, 400); }
 
   // Server-side validation — never trust the client.
   const errors: string[] = [];
@@ -32,21 +29,37 @@ export const POST: APIRoute = async ({ request }) => {
   if (!consent) errors.push('parentConsentAcknowledged');
   if (errors.length) return json({ ok: false, error: 'validation', fields: errors }, 422);
 
+  const key = (session.match(/Session (IV|III|II|I)\b/) || [])[1] || null;
+
+  // Live seat check + increment (public read; elevated write).
+  let waitlisted = false, left: number | null = null;
+  if (key) {
+    try {
+      const res: any = await (items as any).query('SessionSeats').find();
+      const seat = (res?.items ?? []).find((x: any) => x._id === key);
+      const cap = seat?.capacity ?? 12;
+      const reserved = seat?.reserved ?? 0;
+      waitlisted = reserved >= cap;
+      left = Math.max(0, cap - (reserved + 1));
+      const save = auth.elevate(items.save);
+      await save('SessionSeats', { _id: key, session: `Session ${key}`, reserved: reserved + 1, capacity: cap } as any);
+    } catch (e) {
+      console.error('[apply] seat update failed:', e instanceof Error ? e.message : e);
+    }
+  }
+
   const record: Record<string, unknown> = {};
   for (const f of FIELDS) record[f] = body[f] ?? null;
   record.camperAge = age;
   record.parentConsentAcknowledged = consent;
   record.submittedAt = new Date().toISOString();
-  record.status = 'new';
+  record.status = waitlisted ? 'waitlist' : 'reserved';
 
   try {
-    // Insert into the Wix CMS "Applications" collection via the SDK (ambient auth from @wix/astro).
-    const { items } = await import('@wix/data');
     await items.insert('Applications', record);
-    return json({ ok: true, stored: true }, 200);
+    return json({ ok: true, stored: true, waitlisted, left }, 200);
   } catch (err) {
-    // Collection not created yet, or a transient data error: log for recovery, tell the client to show the fallback.
-    console.error('[apply] could not store application:', err instanceof Error ? err.message : err, record);
+    console.error('[apply] could not store reservation:', err instanceof Error ? err.message : err, record);
     return json({ ok: false, error: 'store_failed' }, 502);
   }
 };
