@@ -27,16 +27,26 @@ const courseLd = {
 
   <header class="hero">
     <picture>
-      <source type="image/webp" media="(max-width:720px)" srcset="/assets/causeway-mobile.webp" sizes="100vw" />
-      <source type="image/webp" media="(min-width:721px)" srcset="/assets/causeway-1024.webp 1024w, /assets/causeway-1440.webp 1440w, /assets/causeway-desktop.webp 1920w" sizes="100vw" />
+      <source type="image/webp" media="(max-width:720px)" srcset="/assets/causeway-sunny-mobile.webp" sizes="100vw" />
+      <source type="image/webp" media="(min-width:721px)" srcset="/assets/causeway-sunny-1024.webp 1024w, /assets/causeway-sunny-1440.webp 1440w, /assets/causeway-sunny-1920.webp 1920w" sizes="100vw" />
       <source type="image/jpeg" media="(max-width:720px)" srcset="/assets/causeway-mobile.jpg" />
-      <img class="hero-img" src="/assets/causeway-desktop.jpg" width="1920" height="1401" fetchpriority="high" decoding="async" alt="A cobblestone causeway disappearing under deep teal water at the turn of the tide, leading to a lit stone house on a Brittany island under a stormy sky." />
+      <img class="hero-img" src="/assets/causeway-desktop.jpg" width="1920" height="1401" fetchpriority="high" decoding="async" alt="A cobblestone causeway leading to a lit stone house on a Brittany island, with the sea coming in around it." />
     </picture>
     <TidalFlow />
     <div class="hero-coords">48°38′N · 2°02′W<br/>Île de tidal · Bretagne<br/>Semidiurnal · 2 floods / day
       <span class="hero-live" id="hero-live" role="status" aria-live="off"><span class="dot"></span><span id="hl-text">Causeway open · next turn soon</span></span>
     </div>
     <div class="hero-waterline" aria-hidden="true"><span>High water line</span></div>
+    <!-- playful summer doodles -->
+    <div class="floaty" style="top:8%;left:23%;animation-duration:7s" aria-hidden="true">
+      <svg width="72" height="72" viewBox="0 0 76 76" style="animation:spinslow 44s linear infinite"><g fill="none" stroke="#FFC24B" stroke-width="3.4" stroke-linecap="round"><circle cx="38" cy="38" r="15" fill="#FFC24B" stroke="none"/><path d="M38 6v9M38 61v9M6 38h9M61 38h9M15 15l6.5 6.5M54.5 54.5 61 61M61 15l-6.5 6.5M21.5 54.5 15 61"/></g></svg>
+    </div>
+    <div class="floaty" style="top:17%;left:6%;--rot:-8deg;animation-duration:6.2s;animation-delay:.4s" aria-hidden="true">
+      <svg width="66" height="52" viewBox="0 0 66 52"><path d="M6 30h54l-9 15H15z" fill="#FF7A59" stroke="#0E3A44" stroke-width="2.4" stroke-linejoin="round"/><path d="M33 6v22M33 6l16 22H33z" fill="#FFF6E9" stroke="#0E3A44" stroke-width="2.4" stroke-linejoin="round"/></svg>
+    </div>
+    <div class="floaty" style="top:30%;right:24%;--rot:4deg;animation-duration:8s;animation-delay:.9s" aria-hidden="true">
+      <svg width="52" height="20" viewBox="0 0 52 20" fill="none" stroke="#FDF6E7" stroke-width="2.6" stroke-linecap="round" opacity=".85"><path d="M4 14c4 0 4-6 9-6s5 6 9 6"/><path d="M30 14c4 0 4-6 9-6s5 6 9 6"/></svg>
+    </div>
     <div class="wrap hero-inner">
       <p class="kicker">Teen summer coding camp · ages 13–17</p>
       <h1 aria-label="Learn to code between low tide and high tide">
