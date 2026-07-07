@@ -9,9 +9,9 @@ import Layout from '../layouts/Layout.astro';
   <section class="surface">
     <div class="wrap split">
       <div>
-        <p class="kicker">Apply</p>
-        <h1 style="font-size:clamp(2.2rem,6vw,4rem)" class="wl">Pick a tide window. Send the form.</h1>
-        <p class="muted" style="margin-top:1.2rem">We’ll hold your spot above the waterline. Applications are reviewed in order; we reply to the parent email within two tide cycles — two business days for the landlocked.</p>
+        <p class="kicker">Reserve a seat</p>
+        <h1 style="font-size:clamp(2.2rem,6vw,4rem)" class="wl">Reserve your seat.</h1>
+        <p class="muted" style="margin-top:1.2rem">Twelve seats per session. We hold your spot and email your parent to confirm and arrange the fee.</p>
         <div class="card" style="margin-top:2rem;border-left:3px solid var(--amber)">
           <h3 style="font-size:1.1rem">Parent consent note</h3>
           <p class="muted" style="font-size:.9rem">Tidal Coding Camp is a residential program on a tidal island for ages 13–17. Campers cross a causeway on foot during supervised low-tide windows and remain on the island through high water. A parent or guardian must acknowledge this note for an application to be considered. We only use your details to process the application and reach a guardian — nothing else.</p>
@@ -41,11 +41,11 @@ import Layout from '../layouts/Layout.astro';
           <label for="f-consent" style="font-weight:400"><b>I am the parent/guardian</b> and I acknowledge the consent note: my teen will cross a tidal causeway during supervised low-tide windows and remain on the island through high water. <span class="err" style="margin-top:.3rem">You must acknowledge the consent note to apply.</span></label>
         </div>
         <div class="field"><label for="f-q">A question for us <span class="muted" style="font-weight:400">(optional)</span></label><textarea id="f-q" name="questionForUs" placeholder="Dietary needs, scholarships, the boat, the limpets…"></textarea></div>
-        <button class="btn" type="submit" id="applybtn" style="justify-self:start">Send application</button>
+        <button class="btn" type="submit" id="applybtn" style="justify-self:start">Reserve my seat</button>
         <p class="muted" style="font-size:.8rem;margin:0">We only use your details to process the application and reach a guardian, nothing else.</p>
         <div class="success" id="apply-success" hidden role="status" tabindex="-1">
-          <b>Application’s in, above the waterline.</b>
-          We’ll email your parent within two tide cycles — which is two business days for the landlocked.
+          <b>Seat reserved — above the waterline.</b>
+          We’ll email your parent to confirm the spot and arrange the fee.
         </div>
         <div class="card" id="apply-fallback" hidden role="alert" style="border-left:3px solid var(--rust)">
           <b>We couldn’t auto-submit just now.</b>
@@ -72,7 +72,7 @@ import Layout from '../layouts/Layout.astro';
     if (!ok) return;
     const data = Object.fromEntries(new FormData(form).entries());
     (data as any).parentConsentAcknowledged = (document.getElementById('f-consent') as HTMLInputElement).checked;
-    btn.disabled = true; btn.textContent = 'Sending…';
+    btn.disabled = true; btn.textContent = 'Reserving…';
     let success = false;
     try {
       const r = await fetch('/api/apply', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(data) });
@@ -84,7 +84,7 @@ import Layout from '../layouts/Layout.astro';
       s.scrollIntoView({ behavior: RM ? 'auto' : 'smooth', block: 'center' });
     } else {
       document.getElementById('apply-fallback')!.hidden = false;
-      btn.disabled = false; btn.textContent = 'Send application';
+      btn.disabled = false; btn.textContent = 'Reserve my seat';
     }
   });
 </script>
