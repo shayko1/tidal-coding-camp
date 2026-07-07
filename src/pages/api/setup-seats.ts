@@ -38,8 +38,9 @@ export const GET: APIRoute = async ({ url }) => {
     else log.collection = 'exists';
   } catch (e: any) { log.collection = 'ERR: ' + (e?.message || String(e)); }
   try {
-    const r: any = await bulk('SessionSeats', SEED as any);
-    log.seed = `inserted ${r?.insertedItemIds?.length ?? SEED.length}`;
+    const save = auth.elevate(items.save);
+    for (const s of SEED) await save('SessionSeats', s as any); // overwrite → resets to a clean spread
+    log.seed = `saved ${SEED.length}`;
   } catch (e: any) { log.seed = 'ERR: ' + (e?.message || String(e)); }
   return json({ ok: true, log }, 200);
 };
