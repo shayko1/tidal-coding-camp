@@ -1,0 +1,127 @@
+---
+// Intro preloader: tide-themed Python code rendered as particles; the rising tide
+// washes them away to reveal the brand, then fades to the site. Extracted from the
+// tidal-rise design export, rebranded, once-per-session, reduced-motion-safe.
+---
+<div id="preloader" role="presentation" aria-hidden="true">
+  <canvas id="pl-canvas"></canvas>
+  <div id="pl-brand">
+    <svg width="46" height="46" viewBox="0 0 30 30" aria-hidden="true"><circle cx="15" cy="15" r="14" fill="#FFC24B"/><path d="M4 17c3 0 3-2.5 5.5-2.5S12 17 15 17s3-2.5 5.5-2.5S23 17 26 17" stroke="#0E3A44" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>
+    <span>Tidal Coding Camp</span>
+  </div>
+</div>
+
+<style>
+  #preloader{position:fixed;inset:0;z-index:9999;background:#0E3A44;display:flex;align-items:center;justify-content:center;transition:opacity .6s ease;overflow:hidden}
+  #preloader.done{opacity:0;pointer-events:none}
+  #pl-canvas{position:absolute;inset:0;width:100%;height:100%}
+  #pl-brand{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:.8rem;opacity:0;transform:translateY(8px);transition:opacity .7s ease,transform .7s ease}
+  #pl-brand.show{opacity:1;transform:none}
+  #pl-brand span{font-family:'Fredoka',sans-serif;font-weight:600;font-size:clamp(1.4rem,4vw,2rem);color:#FDF6E7;letter-spacing:.01em}
+  @media(prefers-reduced-motion:reduce){#preloader{display:none}}
+</style>
+
+<script>
+  // @ts-nocheck
+  (function () {
+    const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const pl = document.getElementById('preloader');
+    if (!pl) return;
+    // Show once per browser session; skip on reduced motion.
+    if (RM || sessionStorage.getItem('tcc-intro')) { pl.remove(); return; }
+    sessionStorage.setItem('tcc-intro', '1');
+    document.documentElement.style.overflow = 'hidden'; // no scroll during intro
+
+    const P = { bg: '#0E3A44', primary: '#FDF6E7', accent: '#FFC24B', secondary: '#8FC9D4', fluidity: 0.06, wake: 90 };
+    const CODE = [
+      'import tidal_camp as tc',
+      '',
+      'def causeway(tide):',
+      "    if tide == 'HIGH':",
+      "        return 'FOCUS · build'",
+      "    return 'OPEN · cross'",
+      '',
+      'while summer:',
+      '    if causeway(tc.tide()):',
+      '        tc.ship_project()',
+    ];
+    const KW = ['import', 'def', 'if', 'return', 'while', 'as'];
+    const canvas = document.getElementById('pl-canvas');
+    const ctx = canvas.getContext('2d');
+    const brand = document.getElementById('pl-brand');
+    let groups = {}, tide = 0, rising = false, done = false, dpr = 1, W = 0, H = 0;
+
+    function size() {
+      dpr = Math.min(2, window.devicePixelRatio || 1);
+      W = pl.clientWidth; H = pl.clientHeight;
+      canvas.width = W * dpr; canvas.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+    function build() {
+      groups = {};
+      ctx.clearRect(0, 0, W, H);
+      const mob = W < 600;
+      ctx.font = `bold ${mob ? 12 : 18}px monospace`; ctx.textBaseline = 'top'; ctx.textAlign = 'left';
+      const lh = mob ? 16 : 26, startY = H / 2 - (CODE.length * lh) / 2, startX = Math.max(20, W / 2 - (mob ? 150 : 230));
+      CODE.forEach((line, i) => {
+        let x = startX; const y = startY + i * lh;
+        line.split(/(\s+|\b)/).forEach((w) => {
+          ctx.fillStyle = KW.includes(w) ? P.accent : /[:()='.,]/.test(w) ? P.secondary : P.primary;
+          ctx.fillText(w, x, y); x += ctx.measureText(w).width;
+        });
+      });
+      const img = ctx.getImageData(0, 0, W * dpr, H * dpr).data;
+      ctx.clearRect(0, 0, W, H);
+      const step = (W < 600 ? 2 : 3) * dpr;
+      for (let y = 0; y < H * dpr; y += step) for (let x = 0; x < W * dpr; x += step) {
+        const idx = (y * (W * dpr) + x) * 4;
+        if (img[idx + 3] > 128) {
+          const c = `rgb(${img[idx]},${img[idx + 1]},${img[idx + 2]})`;
+          (groups[c] ||= []).push({ x: x / dpr, y: y / dpr, ox: x / dpr, oy: y / dpr, vx: 0, vy: 0 });
+        }
+      }
+    }
+    function frame() {
+      if (done) return;
+      ctx.fillStyle = P.bg; ctx.fillRect(0, 0, W, H);
+      const tideY = H - H * tide;
+      let active = 0, total = 0;
+      for (const c in groups) {
+        ctx.fillStyle = c; ctx.beginPath();
+        const g = groups[c]; total += g.length;
+        for (const p of g) {
+          if (rising) { p.vx += 0.7 + Math.random() * 0.5; p.vy -= 0.2 + Math.random() * 0.5; }
+          else {
+            if (tide > 0 && p.y > tideY) { p.vy -= 2; p.vx += (Math.random() - 0.5) * 2; }
+            p.vx += (p.ox - p.x) * P.fluidity; p.vy += (p.oy - p.y) * P.fluidity;
+          }
+          p.vx *= 0.85; p.vy *= 0.85; p.x += p.vx; p.y += p.vy;
+          if (p.x > 0 && p.x < W && p.y > 0 && p.y < H) { ctx.rect(p.x, p.y, 1.6, 1.6); active++; }
+        }
+        ctx.fill();
+      }
+      if (rising && active < total * 0.25) brand.classList.add('show');
+      requestAnimationFrame(frame);
+    }
+    function finish() {
+      done = true;
+      document.documentElement.style.overflow = '';
+      pl.classList.add('done');
+      setTimeout(() => pl.remove(), 700);
+    }
+
+    size(); build();
+    addEventListener('resize', () => { if (!rising && !done) { size(); build(); } }, { passive: true });
+    requestAnimationFrame(frame);
+    // gently raise the tide, then wash the code away, then reveal + fade out
+    let t0 = performance.now();
+    const raise = () => {
+      const el = performance.now() - t0;
+      tide = Math.min(0.85, el / 1400);       // tide rises over ~1.4s
+      if (el < 1400) requestAnimationFrame(raise);
+      else { rising = true; setTimeout(finish, 1500); } // wash away, hold on brand, fade
+    };
+    setTimeout(() => requestAnimationFrame(raise), 500);
+    // absolute safety cap
+    setTimeout(finish, 5000);
+  })();
+</script>
